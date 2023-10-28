@@ -1,61 +1,68 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 
-class Entrega:
-    def __init__(self, localizacao, janela_tempo):
-        self.localizacao = localizacao
-        self.janela_tempo = janela_tempo
+class Palestra:
+    def __init__(self, nome, tempo_total):
+        self.nome = nome
+        self.tempo_total = tempo_total
 
-def otimizar_entregas(entregas):
-    entregas_ordenadas = sorted(entregas, key=lambda entrega: entrega.janela_tempo[1])
+def otimizar_palestras(palestras):
+    palestras_ordenadas = sorted(palestras, key=lambda palestra: palestra.tempo_total[1])
     horario_atual = 0
-    entregas_agendadas = []
+    palestras_agendadas = []
 
-    for entrega in entregas_ordenadas:
-        if entrega.janela_tempo[0] >= horario_atual:
-            entregas_agendadas.append(entrega)
-            horario_atual = entrega.janela_tempo[1]
+    for palestra in palestras_ordenadas:
+        if palestra.tempo_total[0] >= horario_atual:
+            palestras_agendadas.append(palestra)
+            horario_atual = palestra.tempo_total[1]
 
-    return entregas_agendadas
+    return palestras_agendadas
 
-def otimizar_entregas_e_mostrar():
-    entregas = []
-    error_messages = []
+def adicionar_palestra():
+    nome = nome_entry.get()
+    horario_inicio = horario_inicio_entry.get()
+    horario_fim = horario_fim_entry.get()
+
+    try:
+        horario_inicio = int(horario_inicio)
+        horario_fim = int(horario_fim)
+
+        if horario_inicio >= horario_fim:
+            tk.messagebox.showerror("Erro de Validação", "O início da janela deve ser anterior ao fim da janela.")
+        else:
+            palestra = Palestra(nome, (horario_inicio, horario_fim))
+            palestras.append(palestra)
+            tree.insert("", "end", values=(palestra.nome, palestra.tempo_total))
+            nome_entry.delete(0, tk.END)
+            horario_inicio_entry.delete(0, tk.END)
+            horario_fim_entry.delete(0, tk.END)
+    except ValueError:
+        tk.messagebox.showerror("Erro de Validação", "Os valores de início e fim devem ser números inteiros.")
+
+def otimizar_palestras_e_mostrar():
+    if not palestras:
+        tk.messegebox.showarning("Aviso", "Nenhuma palestra para otimizar.")
+        return
+
+    palestras_otimizadas = otimizar_palestras(palestras)
 
     for row in tree.get_children():
         tree.delete(row)
 
-    for i in range(len(entrega_entries)):
-        localizacao = entrega_entries[i][0].get()
-        inicio_janela = entrega_entries[i][1].get()
-        fim_janela = entrega_entries[i][2].get()
+    for palestra in palestras_otimizadas:
+        tree.insert("", "end", values=(palestra.nome, palestra.tempo_total))
 
-        try:
-            inicio_janela = int(inicio_janela)
-            fim_janela = int(fim_janela)
-
-            if inicio_janela >= fim_janela:
-                error_messages.append(f"Erro na entrega {i+1}: O início da janela deve ser anterior ao fim da janela.")
-            else:
-                entrega = Entrega(localizacao, (inicio_janela, fim_janela))
-                entregas.append(entrega)
-        except ValueError:
-            error_messages.append(f"Erro na entrega {i+1}: Os valores de início e fim da janela devem ser números inteiros.")
-
-    if error_messages:
-        error_message = "\n".join(error_messages)
-        tk.messagebox.showerror("Erros de Validação", error_message)
-    else:
-        entregas_otimizadas = otimizar_entregas(entregas)
-
-        for entrega in entregas_otimizadas:
-            tree.insert("", "end", values=(entrega.localizacao, entrega.janela_tempo))
-
-def excluir_entrega():
+def excluir_palestra():
     selected_item = tree.selection()
     if selected_item:
         for item in selected_item:
+            index = tree.index(item)
+            del palestras[index]
             tree.delete(item)
+
+palestras = []
+
 
 root = tk.Tk()
 root.title("Planejamento de palestras em evento")
@@ -63,30 +70,27 @@ root.title("Planejamento de palestras em evento")
 frame = ttk.Frame(root)
 frame.pack(padx=10, pady=10)
 
-ttk.Label(frame, text="Entregas (Localização, Janela de Tempo):").grid(row=0, columnspan=3)
+ttk.Label(frame, text="Planejamento de Palestras").grid(row=0, columnspan=4)
 
-entrega_entries = []
+ttk.Label(frame, text="Nome:").grid(row=1, column=0)
+nome_entry = ttk.Entry(frame)
+nome_entry.grid(row=1, column=1)
+ttk.Label(frame, text="Horario de inicio(numero inteiro):").grid(row=1, column=2)
+horario_inicio_entry = ttk.Entry(frame)
+horario_inicio_entry.grid(row=1, column=3)
+ttk.Label(frame, text="Horario de termino(numero inteiro):").grid(row=1, column=4)
+horario_fim_entry = ttk.Entry(frame)
+horario_fim_entry.grid(row=1, column=5)
 
-for i in range(3):
-    ttk.Label(frame, text="Localização:").grid(row=i+1, column=0)
-    localizacao_entry = ttk.Entry(frame)
-    localizacao_entry.grid(row=i+1, column=1)
-    ttk.Label(frame, text="Início do Envento:").grid(row=i+1, column=2)
-    inicio_janela_entry = ttk.Entry(frame)
-    inicio_janela_entry.grid(row=i+1, column=3)
-    ttk.Label(frame, text="Fim do Evento:").grid(row=i+1, column=4)
-    fim_janela_entry = ttk.Entry(frame)
-    fim_janela_entry.grid(row=i+1, column=5)
-    entrega_entries.append((localizacao_entry, inicio_janela_entry, fim_janela_entry))
+ttk.Button(frame, text="Adicionar palestra", command=adicionar_palestra).grid(row=2, column=6)
+ttk.Button(frame, text="Otimizar evento", command=otimizar_palestras_e_mostrar).grid(row=3, column=6)
+ttk.Button(frame, text="Excluir palestra", command=excluir_palestra).grid(row=4, column=6)
 
-ttk.Button(frame, text="Gerar Maximo de eventos", command=otimizar_entregas_e_mostrar).grid(row=4, column=6)
-ttk.Button(frame, text="Excluir Entrega", command=excluir_entrega).grid(row=5, column=6)
-
-tree = ttk.Treeview(frame, columns=("Localização", "Tempo"))
-tree.heading("#1", text="Localização")
+tree = ttk.Treeview(frame, columns=("Nome", "Tempo"))
+tree.heading("#1", text="Nome")
 tree.heading("#2", text="Tempo")
 tree.column("#1", width=200)
 tree.column("#2", width=200)
-tree.grid(row=6, columnspan=7)
+tree.grid(row=5, columnspan=7)
 
 root.mainloop()
