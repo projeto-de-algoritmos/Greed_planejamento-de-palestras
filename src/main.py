@@ -101,7 +101,7 @@ class App:
 
         tree = ttk.Treeview(root, columns=columns, show='headings')
 
-         # define headings
+        # define headings
         tree.heading('first_name', text='First Name')
         tree.heading('last_name', text='Last Name')
         tree.heading('email', text='Email')
@@ -111,7 +111,7 @@ class App:
         self.addicionar_palestra["text"] = "Otimizar evento"
         self.addicionar_palestra["font"] = ("Calibri", "8")
         self.addicionar_palestra["width"] = 12
-        self.addicionar_palestra["command"] = self.adicionar_palestra
+        self.addicionar_palestra["command"] = self.otimizar_palestras_e_mostrar
         self.addicionar_palestra.pack()
 
         #Botao excluir palestra
@@ -187,8 +187,8 @@ class App:
 root = Tk()
 App(root)
 
-w = 1920
-h = 1980
+w = 1000
+h = 1000
 
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
