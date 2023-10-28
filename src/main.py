@@ -8,11 +8,9 @@ class Palestra:
         self.nome = nome
         self.tempo_total = tempo_total
 
-palestras = []
-
 class App:
     def __init__(self, master=None):
-
+        self.palestras = []
         #Fonte padrão
         self.fontePadrao = ("Arial", "10")
 
@@ -143,7 +141,7 @@ class App:
                 tk.messagebox.showerror("Erro de Validação", "O início da janela deve ser anterior ao fim da janela.")
             else:
                 palestra = Palestra(nome, (horario_inicio, horario_fim))
-                palestras.append(palestra)
+                self.palestras.append(palestra)
                 self.tree.insert("", "end", values=(palestra.nome, palestra.tempo_total))
                 self.nome_entry.delete(0, tk.END)
                 self.horario_inicio_entry.delete(0, tk.END)
@@ -152,8 +150,8 @@ class App:
             tk.messagebox.showerror("Erro de Validação", "Os valores de início e fim devem ser números inteiros.")
     
     #Função Otimizar Palestras
-    def otimizar_palestras(palestras):
-        palestras_ordenadas = sorted(palestras, key=lambda palestra: palestra.tempo_total[1])
+    def otimizar_palestras(self):
+        palestras_ordenadas = sorted(self.palestras, key=lambda palestra: palestra.tempo_total[1])
         horario_atual = 0
         palestras_agendadas = []
         for palestra in palestras_ordenadas:
@@ -164,10 +162,10 @@ class App:
     
     #Otimizar e mostrar
     def otimizar_palestras_e_mostrar(self):
-        if not palestras:
+        if not self.palestras:
             tk.messegebox.showarning("Aviso", "Nenhuma palestra para otimizar.")
             return
-        palestras_otimizadas = self.otimizar_palestras(palestras)
+        palestras_otimizadas = self.otimizar_palestras()
         for row in self.tree.get_children():
             self.tree.delete(row)
 
@@ -179,7 +177,7 @@ class App:
         if selected_item:
             for item in selected_item:
                 index = self.tree.index(item)
-                del palestras[index]
+                del self.palestras[index]
                 self.tree.delete(item)
 
 
@@ -199,8 +197,5 @@ y = (screen_height/2) - (h/2)
 root.geometry('%dx%d+%d+%d' % (w, h, x, y))
 
 root.title("Planejamento de palestras em evento")
-
-#ttk.Button(frame, text="Otimizar evento", command=otimizar_palestras_e_mostrar).grid(row=3, column=6)
-#ttk.Button(frame, text="Excluir palestra", command=excluir_palestra).grid(row=4, column=6)
 
 root.mainloop()
