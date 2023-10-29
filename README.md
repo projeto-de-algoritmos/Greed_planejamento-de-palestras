@@ -13,7 +13,7 @@
 O programa Planejamento de Palestras procura otimizar o máximo de palestras para participar em um evento, tendo em vista que algumas palestras tem choque de horario e queremos participar das palestras do inicio ao fim.
 
 ### contexto
-Joãozinho vai participar de um evento onde serão exibidas varias palestras, porem algumas dessas palestras se chocam em questão de horario, por exemplo a palestra A começa as 8:00h e termina as 9:00 e a palestra B começa as 8:30 e termina as 10:00. Assim Joãozinho, querendo poder participar do maximo de palestras de incio ao fim, precisa planejar em quais palestras ele irá.
+Pacheco é um estudante de Graduação e ele precisa de creditos para atingir as horas complementares necessárias. Certo dia ,sua universidade resolver fazer um dia com multiplas palestra rendendo creditos cada uma, Pacheco então decidiu que faria  o maximo de reunião possiveis para conquistar o seus creditos. O objetivo  desse projeto é ajudar Pacheco a assistir o maximo de palestra possiveis. 
 
 ## Screenshots
 Adicione 3 ou mais screenshots do projeto em funcionamento.
