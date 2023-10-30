@@ -51,7 +51,7 @@ $ rm -r ENV
 2. Instalação do tkinker para interface
 
 ```
-$ sudo apt install python3-virtualenv
+pip install tk
 ```
 
 
