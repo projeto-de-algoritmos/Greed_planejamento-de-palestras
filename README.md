@@ -20,8 +20,11 @@ Adicione 3 ou mais screenshots do projeto em funcionamento.
 
 ## Instalação
 
-**Linguagem**: xxxxxx<br>
-**Framework**: (caso exista)<br>
+**Linguagem**: Phyton<br>
+**Framework**: TKinter (biblioteca padrão do python)<br>
+
+
+## Uso 
 Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
 
 1. instalação de uma maquina virtual para facilitar a criação do ambiente:
@@ -45,11 +48,12 @@ $ deactivate
 $ rm -r ENV
 ```
 
-## Uso 
-Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
+2. Instalação do tkinker para interface
 
-## Outros 
-Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
+```
+$ sudo apt install python3-virtualenv
+```
+
 
 
 
