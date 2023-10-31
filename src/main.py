@@ -89,10 +89,10 @@ class App:
 
         #Local para ver quais palestras tem
         self.tree = ttk.Treeview(self.container6, columns=("Nome", "Horario Incio", ))
-        self.tree.heading("#0", text="Nome")
-        self.tree.heading("#1", text="Tempo")
-        self.tree.column("#0", width=200)
+        self.tree.heading("#1", text="Nome")
+        self.tree.heading("#2", text="Tempo")
         self.tree.column("#1", width=200)
+        self.tree.column("#2", width=200)
         self.tree.grid(row=5, columnspan=7)
 
         columns = ('first_name', 'last_name', 'email')

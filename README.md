@@ -27,6 +27,8 @@ Adicione 3 ou mais screenshots do projeto em funcionamento.
 ## Uso 
 Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
 
+obs: uso de maquina virtual é opcional, se a sua versão do python não vem com Tkinter você pode instalar ele como mostra o passo 4.
+
 1. instalação de uma maquina virtual para facilitar a criação do ambiente:
 ```
 $ sudo apt install python3-virtualenv
@@ -34,27 +36,22 @@ $ sudo apt install python3-virtualenv
 
 2. Criar o ambiente virtual:
 ```
-$ virtualenv hp_env
+$ virtualenv palestra_env
 ```
 
 3. ativar o ambiente virtual:
 ```
-$ source hp_env/bin/activate
+$ source palestra_env/bin/activate
+```
+
+4. Instalação do tkinker para interface
+
+```
+$ pip install tk
 ```
 
 Depois de usar, para desativar e apagar o ambiente virtual:
 ```
 $ deactivate
-$ rm -r ENV
+$ rm -r palestra_env
 ```
-
-2. Instalação do tkinker para interface
-
-```
-pip install tk
-```
-
-
-
-
-
